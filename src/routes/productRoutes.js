@@ -69,8 +69,34 @@ router.get('/', (req, res) => {
   res.json([{ id: 1, name: 'Product A' }, { id: 2, name: 'Product C' }]);
 });
 
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   get:
+ *     summary: Obtener un producto por ID
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID del producto
+ *     responses:
+ *       200:
+ *         description: Producto encontrados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Product'     
+ *       404:
+ *         description: Producto no encontrado
+ */
+
 router.get('/:id', (req, res) => {
   const productId = req.params.id;
+  if (productId < 0)
+    return res.status(404).json({ message: 'Product not found' });
   res.json({ id: productId, name: `Product ${productId}` });
 });
 
