@@ -100,16 +100,87 @@ router.get('/:id', (req, res) => {
   res.json({ id: productId, name: `Product ${productId}` });
 });
 
+/**
+ * @swagger
+ * /api/products:
+ *  post:
+ *    summary: Crear un nuevo producto
+ *    tags: [Products]
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Product'
+ *  responses:
+ *    201:
+ *      description: Producto creado exitosamente
+ *      content:  
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Product'
+ */
+
 router.post('/', (req, res) => {
   const newProduct = req.body;
   res.status(201).json(newProduct);
 });
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   put:
+ *      summary: Actualizar un producto por ID
+ *      tags: [Products]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *          required: true
+ *          description: ID del producto
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Product'
+ *      responses:
+ *        200:
+ *          description: Producto actualizado exitosamente
+ *          content:
+ *            application/json:
+ *              schema:
+ *                $ref: '#/components/schemas/Product' 
+ *        404:
+ *          description: Producto no encontrado 
+ */
 
 router.put('/:id', (req, res) => {
   const productId = req.params.id;
   const updatedProduct = req.body;
   res.json({ id: productId, ...updatedProduct });
 });
+
+/**
+ * @swagger
+ * /api/products/{id}:
+ *   delete:
+ *      summary: Eliminar un producto por ID
+ *      tags: [Products]
+ *      parameters:
+ *        - in: path
+ *          name: id
+ *          schema:
+ *            type: integer
+ *          required: true
+ *          description: ID del producto
+ *      responses:
+ *        204:
+ *          description: Producto eliminado exitosamente
+ *        404:
+ *          description: Producto no encontrado
+ */
 
 router.delete('/:id', (req, res) => {
   const productId = req.params.id;
