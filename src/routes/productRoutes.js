@@ -1,4 +1,6 @@
 const express = require('express');
+const productController = require('../controllers/ProductController');
+
 const router = express.Router();
 
 /**
@@ -65,9 +67,7 @@ const router = express.Router();
  *                $ref: '#/components/schemas/Product'
  */
 
-router.get('/', (req, res) => {
-  res.json([{ id: 1, name: 'Product A' }, { id: 2, name: 'Product C' }]);
-});
+router.get('/', productController.getAllProducts);
 
 /**
  * @swagger
@@ -93,12 +93,33 @@ router.get('/', (req, res) => {
  *         description: Producto no encontrado
  */
 
-router.get('/:id', (req, res) => {
-  const productId = req.params.id;
-  if (productId < 0)
-    return res.status(404).json({ message: 'Product not found' });
-  res.json({ id: productId, name: `Product ${productId}` });
-});
+router.get('/:id', productController.getProductById);
+
+/**
+ * @swagger
+ * /api/products/name/{name}:
+ *   get: 
+ *    summary: Obtener un producto por nombre
+ *    tags: [Products]
+ *    parameters:
+ *      - in: path
+ *        name: name
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: Nombre del producto
+ *   responses:
+ *    200:
+ *      description: Producto encontrado
+ *      content:
+ *        application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Product'
+ *    404:
+ *      description: Producto no encontrado
+ */
+
+router.get('/:name', productController.getProductByName);
 
 /**
  * @swagger
@@ -121,10 +142,7 @@ router.get('/:id', (req, res) => {
  *            $ref: '#/components/schemas/Product'
  */
 
-router.post('/', (req, res) => {
-  const newProduct = req.body;
-  res.status(201).json(newProduct);
-});
+router.post('/', productController.createProduct);
 
 /**
  * @swagger
@@ -156,11 +174,7 @@ router.post('/', (req, res) => {
  *          description: Producto no encontrado 
  */
 
-router.put('/:id', (req, res) => {
-  const productId = req.params.id;
-  const updatedProduct = req.body;
-  res.json({ id: productId, ...updatedProduct });
-});
+router.put('/:id', productController.updateProduct);
 
 /**
  * @swagger
@@ -182,10 +196,7 @@ router.put('/:id', (req, res) => {
  *          description: Producto no encontrado
  */
 
-router.delete('/:id', (req, res) => {
-  const productId = req.params.id;
-  res.status(204).send();
-});
+router.delete('/:id', productController.deleteProduct);
 // Define your product routes here
 
 module.exports = router;

@@ -45,6 +45,20 @@ const productController = {
             res.status(500).json({ error: 'Error fetching product' });
         }
     },
+    // Get a product by name
+    getProductByName: async (req, res) => {
+        try {
+            const product = await Product.findOne({ where: { name: req.params.name } });
+            if (!product) {
+                res.status(404).json({ error: 'Product not found' });
+            }
+            else {
+                res.status(200).json(product);
+            }
+        } catch (error) {
+            res.status(500).json({ error: 'Error fetching product' });
+        }
+    },
     // Update a product by ID
     updateProduct: async (req, res) => {
         try {

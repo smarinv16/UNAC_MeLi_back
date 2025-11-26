@@ -1,8 +1,8 @@
-const {sequelize} = require('sequelize');
-request ('dotenv').config();
+const {Sequelize} = require('sequelize');
+require('dotenv').config();
 
 
-const sequelize = new sequelize (
+const sequelize = new Sequelize (
     process.env.DB_NAME, 
     process.env.DB_USER, 
     process.env.DB_PASSWORD, {
@@ -15,7 +15,7 @@ const sequelize = new sequelize (
 
 const connectDB = async () => {
     try {
-        await sequelize.authenticate(); 
+        await Sequelize.authenticate(); 
         console.log('Conexión a la base de datos establecida correctamente.');
     } catch (error) {
         console.error('No se pudo conectar a la base de datos:', error);
