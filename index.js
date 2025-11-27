@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
+const {connectDB} = require('./src/config/database');
+const {syncDatabase} = require('./src/models');
 const corsMiddleware = require('./src/middleware/cors');
-const { swaggerUi, swaggerSpec } = require('./src/config/swagger');
 const productRoutes = require('./src/routes/productRoutes');
+const { swaggerUi, swaggerSpec } = require('./src/config/swagger');
 
 
 
@@ -22,8 +24,12 @@ app.get('/', (req, res) => {
 });
 
 
+// Connect to the database and sync models
+connectDB().then(() => {
+  syncDatabase();
+});
 
-
+// Start the server
 
 app.listen(port, () => {
   console.log(`Servicio escuchando por http://localhost:${port}`);

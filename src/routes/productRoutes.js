@@ -98,28 +98,31 @@ router.get('/:id', productController.getProductById);
 /**
  * @swagger
  * /api/products/name/{name}:
- *   get: 
- *    summary: Obtener un producto por nombre
- *    tags: [Products]
- *    parameters:
- *      - in: path
- *        name: name
- *        schema:
- *          type: string
- *        required: true
- *        description: Nombre del producto
- *   responses:
- *    200:
- *      description: Producto encontrado
- *      content:
- *        application/json:
- *          schema:
- *            $ref: '#/components/schemas/Product'
- *    404:
- *      description: Producto no encontrado
+ *   get:
+ *     summary: Obtener un producto por nombre
+ *     tags: [Products]
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Nombre del producto
+ *     responses:
+ *       200:
+ *         description: Producto encontrado
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Product'
+ *       404:
+ *         description: Producto no encontrado
  */
 
-router.get('/:name', productController.getProductByName);
+
+router.get('/name/:name', productController.getProductByName);
 
 /**
  * @swagger

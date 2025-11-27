@@ -1,4 +1,5 @@
 const Product = require('../models/Product');
+const { Op } = require('sequelize');
 
 const productController = {
     // Create a new product
@@ -47,18 +48,22 @@ const productController = {
     },
     // Get a product by name
     getProductByName: async (req, res) => {
-        try {
-            const product = await Product.findOne({ where: { name: req.params.name } });
-            if (!product) {
-                res.status(404).json({ error: 'Product not found' });
-            }
-            else {
-                res.status(200).json(product);
-            }
-        } catch (error) {
-            res.status(500).json({ error: 'Error fetching product' });
+    try {
+      const { name } = req.params;
+      console.log(name);
+      const product = await Product.findAll({
+        where: {
+          name: {
+            [Op.like]: `%${name}%`  
+          }
         }
-    },
+      });
+      console.log(product);
+      res.status(200).json(product);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
     // Update a product by ID
     updateProduct: async (req, res) => {
         try {
