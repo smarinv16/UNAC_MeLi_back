@@ -6,6 +6,7 @@ const productController = {
     createProduct: async (req, res) => {
         try {
             const{name, description, price, category, stock, imageUrl} = req.body;
+            console.log(req.body);
             const newProduct = await Product.create({
                 name, 
                 description, 
