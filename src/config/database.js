@@ -4,10 +4,10 @@ require('dotenv').config();
 
 const sequelize = new Sequelize (
     process.env.DB_NAME || process.env.MYSQL_DATABASE_UNAC || "meli_db",
-    process.env.DB_USER || process.env.MYSQLUSER || "admin",
-    process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || "Marin116*", 
+    process.env.DB_USER || process.env.MYSQLUSER || "root",
+    process.env.DB_PASSWORD || process.env.MYSQLPASSWORD || "unac1234", 
     {
-        host: process.env.DB_HOST || process.env.MYSQLHOST || "dbunac.cyv22ciau24e.us-east-1.rds.amazonaws.com",
+        host: process.env.DB_HOST || process.env.MYSQLHOST || "localhost",
         dialect: 'mysql',
         port : process.env.DB_PORT || process.env.MYSQLPORT || 3306,
         logging : false,
